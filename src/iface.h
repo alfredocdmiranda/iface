@@ -11,7 +11,7 @@
 #include <sys/ioctl.h>
 #include <linux/if_link.h>
 
-#define HW_ADDR_LENGTH 13
+#define HW_ADDR_LENGTH 18
 #define IFACE_NAME_LENGTH 10
 #define MAX_IFACE 10
 
@@ -20,6 +20,14 @@ struct iface{
     char *inet_addr;
     char *inet6_addr;
     char *hw_addr;
+    char *broad_addr;
+    char *inet_mask;
+    char *inet6_mask;
+    unsigned char running;
+    unsigned char updown;
+    unsigned int flags;
+    unsigned int mtu;
+    unsigned int metric;
     unsigned int tx_bytes;
     unsigned int rx_bytes;
     unsigned int tx_packets;
