@@ -53,3 +53,25 @@ You can use in this way:
     if(ifa->flags & IFF_RUNNING){
         
     }
+
+## Functions
+
+These are some functions to initialize the structure, get information and 
+etc.
+
+    void free_iface(struct iface *ifa)
+        - This function release the memory allocated for this structure.
+    void init_iface(struct iface *ifa)
+        - This function initialize the structure, allocating memory and 
+          other necessary steps.
+    int get_info_interface(struct iface* ifa, const char *name_iface)
+        - This function gather all information about the interface, and 
+          fill the structure with these information.
+    int get_list_interfaces(char *** list_ifaces)
+        - This function receive a pointer-to-pointer-to-pointer char
+          (you call get_list_interfaces(&list_ifaces)) and fill it with 
+          a list of all available NIC. It returns the length of list or 
+          -1 if happens something wrong.
+    char * get_mac(const char *name_iface)
+        - This function returns MAC address of a available NIC. It should 
+          be used just by get_info_interface(), but you can use too.
