@@ -91,12 +91,12 @@ int get_info_interface(struct iface* ifa,const char *name_iface){
     return 0;
 }
 
-char ** get_list_interfaces(){
-    char **list_ifaces;
+int get_list_interfaces(char *** list_ifaces){
+    char **aux_list_ifaces;
     struct ifaddrs *ifaddr, *ifa;
     int i = 0, j;
 
-    list_ifaces = malloc(sizeof(char*)*MAX_IFACE);
+    aux_list_ifaces = malloc(sizeof(char*)*MAX_IFACE);
 
     if (getifaddrs(&ifaddr) == -1) {
         return NULL;
@@ -109,7 +109,7 @@ char ** get_list_interfaces(){
         
         for(j=0; j<i; j++){
             //Check if it already exists the interface inside the list
-            if(strcmp(ifa->ifa_name, list_ifaces[j]) == 0){
+            if(strcmp(ifa->ifa_name, aux_list_ifaces[j]) == 0){
                 break;
             }
         }
@@ -120,14 +120,16 @@ char ** get_list_interfaces(){
             continue;
         }
         
-        list_ifaces[i] = malloc(sizeof(char)*IFACE_NAME_LENGTH);
-        strcpy(list_ifaces[i], ifa->ifa_name);
+        aux_list_ifaces[i] = malloc(sizeof(char)*IFACE_NAME_LENGTH);
+        strcpy(aux_list_ifaces[i], ifa->ifa_name);
         i++;
     }
     
+    *list_ifaces = aux_list_ifaces;
+    
     freeifaddrs(ifaddr);
     
-    return list_ifaces;
+    return j+1;
 }
 
 char * get_mac(const char *name_iface){

@@ -7,13 +7,12 @@
 int main(int argc, char *argv[]){
     struct iface ifa;
     
-    char **list;
+    char **list = NULL;
+    int list_len;
     int i;
-    list = get_list_interfaces();
-    for(i=0; i < MAX_IFACE; i++){
-        if(list[i] == NULL){
-            continue;
-        }
+    
+    list_len = get_list_interfaces(&list);
+    for(i=0; i<list_len; i++){
         get_info_interface(&ifa, list[i]);
     
         printf("Interface: %s\n", ifa.name);
