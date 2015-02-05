@@ -39,6 +39,6 @@ void init_iface(struct iface *ifa);
 int get_info_interface(struct iface* ifa, const char *name_iface);
 int get_list_interfaces(char *** list_ifaces);
 char * get_mac(const char *name_iface);
-//TODO update_tx_rx();
+int update_tx_rx(struct iface* ifa);
 
 #endif

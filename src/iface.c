@@ -35,7 +35,7 @@ void init_iface(struct iface *ifa){
     ifa->rx_packets = 0;
 }
 
-int get_info_interface(struct iface* ifa,const char *name_iface){
+int get_info_interface(struct iface* ifa, const char *name_iface){
     struct ifaddrs *ifaddr, *aux;
     struct rtnl_link_stats *stats;
     
@@ -99,7 +99,7 @@ int get_list_interfaces(char *** list_ifaces){
     aux_list_ifaces = malloc(sizeof(char*)*MAX_IFACE);
 
     if (getifaddrs(&ifaddr) == -1) {
-        return NULL;
+        return -1;
     }
    
     for(ifa=ifaddr; ifa!=NULL; ifa=ifa->ifa_next){
@@ -151,4 +151,37 @@ char * get_mac(const char *name_iface){
         return NULL;
     }
     return ret;
+}
+
+int update_tx_rx(struct iface* ifa){
+    //TODO Verify errors
+    
+    struct ifaddrs *ifaddr, *aux;
+    struct rtnl_link_stats *stats;
+    
+    if (getifaddrs(&ifaddr) == -1) {
+        return -1;
+    }
+    
+    for(aux=ifaddr; aux!=NULL; aux=aux->ifa_next){
+        if (aux->ifa_addr == NULL){
+            continue;
+        }
+        
+        if(strcmp(aux->ifa_name, ifa->name) == 0){
+            if(aux->ifa_addr->sa_family == AF_PACKET){
+                stats = aux->ifa_data;
+
+                ifa->tx_bytes =  stats->tx_bytes;
+                ifa->rx_bytes =  stats->rx_bytes;
+                ifa->tx_packets =  stats->tx_packets;
+                ifa->rx_packets =  stats->rx_packets;
+                
+                break;
+            }
+        }
+    }
+    freeifaddrs(ifaddr);
+    
+    return 0;
 }

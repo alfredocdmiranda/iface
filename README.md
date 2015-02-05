@@ -1,8 +1,9 @@
 # iface
 
-It is a interface to get information about Network Interfaces in your computer.
-This library uses some Linux libraries to get informations about available 
-Network Interfaces, so it makes easier to get these information.
+It is a interface to get information about Network Interface Cards(NIC) 
+in your computer. This library uses some Linux libraries to get 
+information about available Network Interfaces, so it makes easier to get 
+these information.
 
 ## Installation
     
@@ -75,3 +76,7 @@ etc.
     char * get_mac(const char *name_iface)
         - This function returns MAC address of a available NIC. It should 
           be used just by get_info_interface(), but you can use too.
+    int update_tx_rx(struct iface* ifa)
+        - This function updates all information about NIC's TX/RX (bytes 
+          and packets). It returns 0 if all happens okay, and -1 if it 
+          happens something wrong.
