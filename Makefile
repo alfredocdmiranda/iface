@@ -9,7 +9,7 @@ iface.o:	$(SRC_DIR)/iface.c
 		$(CC) $(CFLAGS) $(SRC_DIR)/iface.c -o $(BUILD_DIR)/iface.o
 
 libiface.a:	$(BUILD_DIR)/iface.o
-		ar -cqv $(BUILD_DIR)/libiface.a $(BUILD_DIR)/iface.o
+		ar -crv $(BUILD_DIR)/libiface.a $(BUILD_DIR)/iface.o
 
 mkdir:
 		mkdir -p ./build
@@ -19,4 +19,4 @@ install:
 		cp $(SRC_DIR)/iface.h /usr/include
 
 clean:
-	rm *.o
+	rm $(BUILD_DIR)/*.o
