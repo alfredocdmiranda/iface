@@ -76,6 +76,25 @@ etc.
     char * get_mac(const char *name_iface)
         - This function returns MAC address of a available NIC. It should 
           be used just by get_info_interface(), but you can use too.
+    int set_inet_addr(struct iface *ifa, const char *inet_addr)
+        - This function modify the NIC's IPv4 Address. You must have 
+          permission to run correctly this function. It returns 0 if 
+          successful, -1 if the IP address is wrong or other number set 
+          on 'errno'.
+    int set_mask_addr(struct iface *ifa, const char *mask_addr)
+        - This function modify the NIC's Network Mask v4 Address. You 
+          must have permission to run correctly this function. It returns 
+          0 if successful, -1 if the IP address is wrong or other number 
+          set on 'errno'.
+    int set_broad_addr(struct iface *ifa, const char *broad_addr)
+        - This function modify the NIC's Broadcast Address. You must have 
+          permission to run correctly this function. It returns 0 if 
+          successful, -1 if the IP address is wrong or other number set 
+          on 'errno'.
+    int set_flags(struct iface *ifa, int flags)
+        - This function modify the NIC's Flags. You must have permission 
+          to run correctly this function. It returns 0 if successful or 
+          other number set on 'errno'.
     int update_tx_rx(struct iface* ifa)
         - This function updates all information about NIC's TX/RX (bytes 
           and packets). It returns 0 if all happens okay, and -1 if it 
