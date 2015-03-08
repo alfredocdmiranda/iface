@@ -38,6 +38,7 @@ void init_iface(struct iface *ifa){
 int get_info_interface(struct iface* ifa, const char *name_iface){
     struct ifaddrs *ifaddr, *aux;
     struct rtnl_link_stats *stats;
+    int find = -1;
     
     init_iface(ifa);
     
@@ -52,6 +53,7 @@ int get_info_interface(struct iface* ifa, const char *name_iface){
         
         if(strcmp(aux->ifa_name, name_iface) == 0){
             if(aux->ifa_addr->sa_family == AF_PACKET){
+                find = 0;
                 strcpy(ifa->name, aux->ifa_name);
                 ifa->hw_addr = get_mac(name_iface);
                 
@@ -88,7 +90,7 @@ int get_info_interface(struct iface* ifa, const char *name_iface){
     }
     freeifaddrs(ifaddr);
     
-    return 0;
+    return find;
 }
 
 int get_list_interfaces(char *** list_ifaces){
